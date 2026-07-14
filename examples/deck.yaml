@@ -1,0 +1,33 @@
+format: deckspec/0.1
+deck: modern.enterprise
+target: ppt365
+mode: editable
+size: wide
+
+slides:
+  - title:
+      class: "hero bg-gradient-soft title-xl"
+      t: Slidewind
+      s: Tailwind-style DSL for editable PowerPoint generation
+
+  - cards:
+      class: "grid-3x2 card-elevated icons-line gap-md density-medium accent-blue"
+      t: Why Slidewind?
+      items:
+        - [layout, Compact DSL, LLM outputs small semantic instructions]
+        - [shape, Editable Shapes, Cards and diagrams become PPT objects]
+        - [gradient, Gradients, PPT-native gradient backgrounds]
+        - [text, Text Control, Conservative PowerPoint-safe fitting]
+        - [workflow, Macros, Workflows and cards expand automatically]
+        - [gear, Compiler, Raw OOXML package generation]
+
+  - wf:
+      class: "workflow-5 cards elevated arrows-soft accent-blue"
+      t: Generation Pipeline
+      steps:
+        - [prompt, Prompt, User asks for a deck]
+        - [code, DeckSpec, LLM writes compact YAML]
+        - [layout, Resolve, Engine expands layout]
+        - [ppt, Compile, OOXML PPTX generation]
+        - [edit, Edit, User edits in PowerPoint]
+      callout: The LLM chooses classes; Slidewind owns rendering details.

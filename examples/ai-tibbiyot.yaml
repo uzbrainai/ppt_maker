@@ -1,0 +1,162 @@
+format: deckspec/0.1
+theme: modern.enterprise
+appearance: dark
+target: ppt365
+mode: editable
+size: wide
+
+slides:
+  # 1 — Title
+  - title:
+      class: "hero bg-gradient-primary title-xl"
+      t: "Sun'iy intellektning tibbiyotda qo'llanilishi"
+      s: "Tashxis, davolash va bemor parvarishini yaxshilovchi texnologiyalar"
+
+  # 2 — Impact in numbers
+  - kpi:
+      class: "grid-4x1 accent-multi"
+      t: "Ta'sir raqamlarda"
+      items:
+        - ["95%", "Ba'zi tashxislarda aniqlik"]
+        - ["−40%", "Tahlil vaqtining qisqarishi"]
+        - ["2x", "Tasvir ko'rib chiqish tezligi"]
+        - ["24/7", "Uzluksiz bemor monitoringi"]
+
+  # 3 — Main areas (colorful tinted cards + summary)
+  - cards:
+      class: "grid-3x2 cards-colorful card-tinted accent-top icons-line gap-md"
+      t: "Asosiy yo'nalishlar"
+      items:
+        - [stethoscope, "Tashxis", "Simptom va tahlillarni baholaydi"]
+        - [microscope, "Tibbiy tasvir", "Rentgen, KT va MRT tahlili"]
+        - [pill, "Dori yaratish", "Preparat izlanishini tezlashtiradi"]
+        - [heart-pulse, "Monitoring", "Bemor holatini real vaqtda kuzatadi"]
+        - [dna, "Genomika", "Genetik ma'lumotlarni tahlil qiladi"]
+        - [file-search, "Hujjatlar", "Tibbiy yozuvlardan ma'lumot oladi"]
+      note: "AI shifokorni almashtirmaydi — tashxis aniqligini oshiradi va vaqtni tejaydi; yakuniy qaror har doim mutaxassis zimmasida qoladi."
+
+  # 4 — Donut: where AI is used in medicine
+  - chart:
+      class: "accent-multi"
+      type: donut
+      t: "AI qo'llanilishi tibbiyot ichida"
+      insightTitle: "Kuzatuvlar"
+      items:
+        - ["Tasvir tahlili", 34]
+        - ["Tashxis", 26]
+        - ["Monitoring", 18]
+        - ["Dori yaratish", 12]
+        - ["Ma'muriyat", 10]
+      points:
+        - "Tibbiy tasvir tahlili eng katta ulush"
+        - "Tashxis va monitoring birgalikda ~44%"
+        - "Dori yaratish tez o'smoqda"
+
+  # 5 — Bar: accuracy gain by task
+  - chart:
+      class: "accent-blue"
+      type: bar
+      t: "Vazifalar bo'yicha aniqlik o'sishi (%)"
+      values: true
+      insightTitle: "Nimani bildiradi?"
+      items:
+        - ["Rentgen", 32]
+        - ["Teri", 40]
+        - ["Ko'z", 38]
+        - ["Patologiya", 28]
+        - ["EKG", 30]
+      s: "Tasvirga asoslangan vazifalarda AI eng katta aniqlik o'sishini beradi, chunki bu yerda belgilangan ma'lumotlar ko'p."
+
+  # 6 — Section divider
+  - section:
+      class: "bg-gradient-primary"
+      n: "01"
+      t: "Klinik jarayonda"
+      s: "AI tashxis jarayoniga qanday integratsiya qilinadi"
+
+  # 7 — Diagnostic workflow
+  - wf:
+      class: "workflow-5 cards elevated arrows-soft accent-blue"
+      t: "AI yordamida tashxis jarayoni"
+      steps:
+        - [file-search, "Yig'ish", "Bemor ma'lumotlari va tasvirlar"]
+        - [database, "Tayyorlash", "Ma'lumotlarni tozalash"]
+        - [brain, "Tahlil", "Model anomaliyani aniqlaydi"]
+        - [user-check, "Tekshiruv", "Shifokor natijani baholaydi"]
+        - [check, "Qaror", "Tashxis va davolash rejasi"]
+      callout: "Yakuniy tibbiy qaror har doim shifokor nazoratida qoladi."
+
+  # 8 — Comparison
+  - cmp:
+      t: "An'anaviy va AI yordamidagi tashxis"
+      items:
+        - t: "An'anaviy"
+          icon: "user"
+          tone: "bad"
+          points:
+            - "Ko'p vaqt talab qiladi"
+            - "Subyektiv farqlar bo'ladi"
+            - "Katta hajmni ko'rish qiyin"
+        - t: "AI yordamida"
+          icon: "sparkles"
+          tone: "good"
+          points:
+            - "Tez va takrorlanuvchan"
+            - "Barqaror aniqlik"
+            - "Minglab tasvirni qayta ishlaydi"
+
+  # 9 — Area: market growth
+  - chart:
+      class: "accent-purple"
+      type: area
+      t: "Tibbiy AI bozori o'sishi (mlrd $)"
+      x: ["2020", "2021", "2022", "2023", "2024", "2025"]
+      insightTitle: "Trend"
+      series:
+        - { name: "Bozor", data: [6, 11, 15, 22, 31, 45] }
+      s: "Tibbiy AI bozori besh yilda yetti baravarga yaqin o'sdi."
+      points:
+        - "Yillik o'rtacha o'sish ~45%"
+        - "Tasvir va tashxis yetakchi yo'nalish"
+
+  # 10 — Timeline
+  - timeline:
+      class: "accent-multi"
+      eyebrow: "Yo'l xaritasi"
+      t: "Shifoxonada AI joriy etish bosqichlari"
+      items:
+        - ["1", "Tayyorlik", "Ma'lumotlar va infratuzilma"]
+        - ["2", "Pilot", "Bitta bo'limda sinov loyihasi"]
+        - ["3", "Integratsiya", "EHR tizimiga ulash"]
+        - ["4", "Masshtab", "Boshqa bo'limlarga kengaytirish"]
+        - ["5", "Nazorat", "Sifat va xavfsizlik monitoringi"]
+      callout: "Bosqichma-bosqich joriy etish xavfni kamaytiradi va ishonchni oshiradi."
+
+  # 11 — Challenges
+  - bullets:
+      class: "numbered accent-purple"
+      t: "E'tibor talab qiladigan jihatlar"
+      s: "Tibbiyotda AI ni joriy etishda muhim masalalar"
+      items:
+        - ["Maxfiylik", "Bemor ma'lumotlari qat'iy himoyalanadi"]
+        - ["Xolislik", "Model barcha guruhlarda adolatli ishlashi kerak"]
+        - ["Tushuntiriluvchanlik", "Qaror asoslari shaffof bo'lishi shart"]
+        - ["Tartibga solish", "Tibbiy standartlarga muvofiqlik"]
+        - ["Inson nazorati", "Yakuniy qaror shifokor zimmasida"]
+        - ["Malaka", "Xodimlarni o'qitish zarur"]
+
+  # 12 — Summary
+  - summary:
+      class: "accent-blue"
+      t: "Asosiy xulosalar"
+      s: "AI tibbiyotni yaxshilaydi, lekin inson nazorati bilan birga"
+      items:
+        - [stethoscope, "Aniqroq tashxis", "Erta va ishonchli aniqlash"]
+        - [activity, "Tezroq parvarish", "Vaqt va xarajat tejaladi"]
+        - [shield, "Xavfsiz va axloqiy", "Maxfiylik va nazorat muhim"]
+
+  # 13 — Closing
+  - section:
+      class: "bg-gradient-primary"
+      t: "E'tiboringiz uchun rahmat"
+      s: "Savollar va muhokama uchun tayyorman"

@@ -1,0 +1,232 @@
+format: deckspec/0.1
+deck: modern.enterprise
+target: ppt365
+mode: editable
+size: wide
+
+slides:
+  # 1 — Title
+  - title:
+      class: "hero bg-gradient-primary title-xl"
+      t: "Sun'iy intellektning sohalarda qo'llanilishi"
+      s: "Zamonaviy texnologiyalar turli tarmoqlarni qanday tubdan o'zgartirmoqda"
+
+  # 2 — KPI: impact in numbers
+  - kpi:
+      class: "grid-4x1 accent-multi"
+      t: "Sun'iy intellekt ta'siri raqamlarda"
+      items:
+        - ["+40%", "Mehnat unumdorligi o'sishi"]
+        - ["2.5x", "Ma'lumotlarni qayta ishlash tezligi"]
+        - ["−30%", "Operatsion xarajatlarning kamayishi"]
+        - ["95%", "Ba'zi diagnostik vazifalarda aniqlik darajasi"]
+
+  # 2b — Donut chart + insight
+  - chart:
+      class: "accent-multi"
+      type: donut
+      t: "AI loyihalari sohalar bo'yicha taqsimoti"
+      insightTitle: "Asosiy kuzatuvlar"
+      items:
+        - ["Tibbiyot", 28]
+        - ["Moliya", 24]
+        - ["Sanoat", 18]
+        - ["Ta'lim", 16]
+        - ["Qishloq xo'jaligi", 14]
+      points:
+        - "Tibbiyot va moliya birgalikda yarmidan ko'pini tashkil etadi"
+        - "Sanoat avtomatlashtirish hisobiga tez o'smoqda"
+        - "Ta'lim va agrosoha katta o'sish salohiyatiga ega"
+
+  # 2c — Bar chart + insight
+  - chart:
+      class: "accent-blue"
+      type: bar
+      t: "Sohalar bo'yicha samaradorlik o'sishi (%)"
+      values: true
+      insightTitle: "Nimani anglatadi?"
+      items:
+        - ["Tibbiyot", 35]
+        - ["Moliya", 42]
+        - ["Sanoat", 30]
+        - ["Ta'lim", 25]
+        - ["Transport", 38]
+        - ["Savdo", 33]
+      s: "Moliya va transport sohalarida samaradorlik eng yuqori o'sishni ko'rsatmoqda, chunki bu yerda jarayonlar yaxshi raqamlashtirilgan va ma'lumotlar ko'p."
+
+  # 2d — Area chart + insight
+  - chart:
+      class: "accent-purple"
+      type: area
+      t: "Global AI bozori o'sishi (mlrd $)"
+      x: ["2020", "2021", "2022", "2023", "2024", "2025"]
+      insightTitle: "Trend"
+      series:
+        - { name: "Bozor hajmi", data: [62, 93, 137, 196, 279, 391] }
+      s: "Bozor 2020-yildan beri olti baravardan ko'proq o'sdi."
+      points:
+        - "Yillik o'rtacha o'sish ~45%"
+        - "Eng katta sakrash 2023–2024 yillarda"
+        - "Investitsiyalar barqaror ortib bormoqda"
+
+  # 3 — What AI can do (colorful cards)
+  - cards:
+      class: "grid-3x2 cards-colorful card-tinted accent-top icons-line gap-md"
+      t: "Sun'iy intellekt nima qila oladi?"
+      items:
+        - ["brain", "Mashinali o'rganish", "Katta hajmdagi ma'lumotlardan naqsh va qonuniyatlarni mustaqil topadi"]
+        - ["eye", "Kompyuter ko'rishi", "Tasvir va videolarni tushunadi, ob'ektlarni aniqlaydi"]
+        - ["message-square", "Tabiiy tilni qayta ishlash", "Matn va nutqni tahlil qiladi, tarjima va xulosa beradi"]
+        - ["chart-column", "Bashoratli tahlil", "Tarixiy ma'lumotlar asosida kelajakdagi natijalarni taxmin qiladi"]
+        - ["bot", "Avtomatlashtirish", "Takroriy va qoidaga asoslangan vazifalarni o'zi bajaradi"]
+        - ["lightbulb", "Qaror qo'llab-quvvatlash", "Mutaxassisga asoslangan tavsiya va yechimlar taklif qiladi"]
+
+  # 4 — Section divider
+  - section:
+      class: "bg-gradient-primary"
+      n: "01"
+      t: "Inson hayotiga yaqin sohalar"
+      s: "Tibbiyot, ta'lim va moliya yo'nalishlarida AI"
+
+  # 5 — Healthcare (numbered, accent-left) + summary block
+  - cards:
+      class: "grid-3x1 card-elevated accent-left numbered icons-line accent-teal gap-md"
+      t: "Tibbiyot sohasida qo'llanilishi"
+      items:
+        - ["stethoscope", "Erta diagnostika", "Simptom va tahlillarni baholab kasallikni erta aniqlaydi"]
+        - ["microscope", "Tibbiy tasvir tahlili", "Rentgen, KT va MRT tasvirlaridagi anomaliyalarni topadi"]
+        - ["pill", "Yangi dori izlash", "Preparatlar yaratish jarayonini tezlashtiradi"]
+      note: "AI tibbiyotda shifokorni almashtirmaydi, balki tashxis aniqligini oshiradi va vaqtni tejaydi. Yakuniy qaror har doim mutaxassis zimmasida qoladi."
+
+  # 6 — Education (colorful tinted cards)
+  - cards:
+      class: "grid-2x2 cards-colorful card-tinted icons-filled gap-md density-medium"
+      t: "Ta'lim sohasida qo'llanilishi"
+      items:
+        - ["graduation-cap", "Shaxsiy o'qitish", "Har bir o'quvchiga moslashgan individual dastur"]
+        - ["book-open", "Aqlli kontent", "Darslik, mashq va testlarni avtomatik tayyorlaydi va yangilaydi"]
+        - ["languages", "Til o'rganish", "Talaffuz, grammatika va lug'atni real vaqtda tekshiradi"]
+        - ["users", "O'qituvchiga yordam", "Baholash va davomatni avtomatlashtirib vaqtni tejaydi"]
+
+  # 7 — Finance & banking (KPI-style highlight via cards)
+  - cards:
+      class: "grid-3x1 card-elevated accent-top icons-line accent-green gap-md"
+      t: "Moliya va bank ishida"
+      items:
+        - ["shield", "Firibgarlikka qarshi", "Tranzaksiyalardagi shubhali xatti-harakatlarni real vaqtda aniqlaydi"]
+        - ["trending-up", "Kredit skoringi", "Mijozning to'lov qobiliyatini baholab kredit qaroriga yordam beradi"]
+        - ["bot", "Bank yordamchisi", "Chatbot orqali mijozlarga 24/7 avtomatik xizmat ko'rsatadi"]
+
+  # 8 — Workflow: AI scoring pipeline
+  - wf:
+      class: "workflow-5 cards elevated arrows-soft accent-green"
+      t: "Misol: AI kredit skoringi jarayoni"
+      steps:
+        - ["file-search", "Yig'ish", "Mijoz va ariza ma'lumotlarini olish"]
+        - ["database", "Tayyorlash", "Ma'lumotlarni tozalash va birlashtirish"]
+        - ["brain", "Tahlil", "Model xavf darajasini hisoblaydi"]
+        - ["user-check", "Tasdiq", "Mutaxassis natijani ko'rib chiqadi"]
+        - ["check", "Natija", "Qaror va to'liq hujjatlashtirish"]
+      callout: "Muhim moliyaviy qarorlar har doim inson nazoratidan o'tadi"
+
+  # 9 — Comparison: traditional vs AI
+  - cmp:
+      t: "An'anaviy yondashuv va AI yondashuvi"
+      items:
+        - t: "An'anaviy usul"
+          icon: "user"
+          tone: "bad"
+          points:
+            - "Qo'lda va sekin bajariladi"
+            - "Inson xatosiga moyil"
+            - "Katta hajmni qayta ishlash qiyin"
+            - "Xarajatlar yuqori"
+        - t: "AI yordamida"
+          icon: "sparkles"
+          tone: "good"
+          points:
+            - "Avtomatik va tezkor"
+            - "Barqaror va aniq natija"
+            - "Millionlab yozuvni qayta ishlaydi"
+            - "Operatsion xarajat kamayadi"
+
+  # 10 — Section divider
+  - section:
+      class: "bg-gradient-primary"
+      n: "02"
+      t: "Ishlab chiqarish va infratuzilma"
+      s: "Qishloq xo'jaligi, transport va sanoatda AI"
+
+  # 10 — Agriculture (colorful)
+  - cards:
+      class: "grid-2x2 cards-colorful accent-top icons-line gap-md density-medium"
+      t: "Qishloq xo'jaligida qo'llanilishi"
+      items:
+        - ["sprout", "Hosil monitoringi", "Sun'iy yo'ldosh va dron tasvirlari orqali ekin holatini kuzatadi"]
+        - ["scan-search", "Kasallik aniqlash", "Barg suratidan zararkunanda va kasallikni erta topadi"]
+        - ["tractor", "Aqlli texnika", "Avtonom traktor va dronlar dala ishlarini optimallashtiradi"]
+        - ["chart-column", "Hosil bashorati", "Ob-havo va tuproq ma'lumotlariga qarab hosilni taxmin qiladi"]
+
+  # 11 — Transport & industry combined (dense colorful)
+  - cards:
+      class: "grid-3x2 cards-colorful card-tinted icons-line gap-sm density-medium"
+      t: "Transport, logistika va sanoatda"
+      items:
+        - ["car", "Avtonom haydash", "Haydovchisiz transport vositalari"]
+        - ["map-pin", "Marshrut optimizatsiya", "Eng tezkor yetkazib berish yo'li"]
+        - ["factory", "Aqlli ishlab chiqarish", "Nosozlikni oldindan bashorat"]
+        - ["eye", "Sifat nazorati", "Nuqsonli mahsulotni aniqlash"]
+        - ["network", "Ta'minot zanjiri", "Zaxira va talab muvozanati"]
+        - ["shopping-cart", "Savdo tavsiyalari", "Moslashtirilgan takliflar"]
+
+  # 12 — Challenges (bullets, numbered, two columns)
+  - bullets:
+      class: "numbered accent-purple"
+      t: "Asosiy e'tibor talab qiladigan jihatlar"
+      s: "Sun'iy intellektni joriy etishda quyidagilarni hisobga olish zarur"
+      items:
+        - ["Ma'lumotlar sifati", "Model faqat sifatli va xolis ma'lumotlar bilan yaxshi ishlaydi"]
+        - ["Maxfiylik va xavfsizlik", "Shaxsiy ma'lumotlarni himoyalash birinchi o'rinda turadi"]
+        - ["Shaffoflik", "Qaror qanday qabul qilingani tushunarli bo'lishi kerak"]
+        - ["Inson nazorati", "Muhim qarorlar mutaxassis tomonidan tasdiqlanadi"]
+        - ["Axloqiy me'yorlar", "AI adolatli va kamsitishsiz ishlashi shart"]
+        - ["Malaka oshirish", "Xodimlarni yangi vositalar bilan ishlashga o'rgatish lozim"]
+
+  # 13 — Conclusion / takeaways
+  - cards:
+      class: "grid-3x1 cards-colorful card-tinted icons-filled gap-md"
+      t: "Xulosa va kelajak"
+      items:
+        - ["rocket", "Tez rivojlanish", "AI deyarli har bir sohaga kirib bormoqda va sur'at ortib boradi"]
+        - ["users", "Inson va AI hamkorligi", "Texnologiya insonni almashtirmaydi, balki unga kuchli yordamchi bo'ladi"]
+        - ["shield", "Mas'uliyatli AI", "Xavfsizlik, axloq va shaffoflik barqaror muvaffaqiyat asosidir"]
+
+  # Timeline: AI adoption roadmap (with eyebrow + roadmap callout)
+  - timeline:
+      class: "accent-multi"
+      eyebrow: "Yo'l xaritasi"
+      t: "Tashkilotda AI joriy etish bosqichlari"
+      items:
+        - ["1", "Audit", "Jarayonlarni baholash va imkoniyatlarni aniqlash"]
+        - ["2", "Pilot", "Bitta yo'nalishda sinov loyihasi"]
+        - ["3", "Integratsiya", "Tizimlarga bosqichma-bosqich ulash"]
+        - ["4", "Masshtab", "Boshqa bo'limlarga kengaytirish"]
+        - ["5", "Optimallash", "Monitoring va doimiy yaxshilash"]
+      callout: "Bosqichma-bosqich yondashuv xavfni kamaytiradi va har qadamda qiymatni isbotlaydi."
+
+  # Summary / recap
+  - summary:
+      class: "accent-blue"
+      t: "Asosiy xulosalar"
+      s: "Sun'iy intellekt allaqachon barcha sohalarda real qiymat yaratmoqda"
+      items:
+        - [layout, "Keng qamrov", "AI tibbiyotdan qishloq xo'jaligigacha kirib bordi"]
+        - [trending-up, "O'lchanadigan natija", "Tezlik, aniqlik va xarajat ko'rsatkichlari yaxshilanadi"]
+        - [user-check, "Inson nazorati", "Muhim qarorlar mutaxassis tasdig'idan o'tadi"]
+        - [shield, "Mas'uliyat", "Xavfsizlik, axloq va shaffoflik shart"]
+
+  # Closing section
+  - section:
+      class: "bg-gradient-primary"
+      t: "E'tiboringiz uchun rahmat"
+      s: "Savollar va muhokama uchun tayyorman"

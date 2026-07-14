@@ -1,0 +1,161 @@
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+:root, [data-theme="dark"] {
+  --c-page:#06080d;
+  --c-text:#f4f8fd; --c-text-2:#9eaabf; --c-text-3:#8a95ab;
+  --c-panel:rgba(17,21,29,0.5); --c-panel-2:rgba(255,255,255,0.06);
+  --c-panel-strong:linear-gradient(165deg,#151a23,#1a1626);
+  --c-border:rgba(255,255,255,0.12); --c-chip:rgba(255,255,255,0.08); --c-input:rgba(255,255,255,0.045);
+  --c-btn-bg:#eef2f8; --c-btn-fg:#0c0f16;
+  --c-logo:#ffffff;
+  --c-nav:#9eaabf;
+  /* Text that sits directly on the (always-dark) shader backdrop — NOT inside a
+     glass container. These stay light in BOTH themes, because the backdrop has
+     black regions regardless of theme. In-container text keeps using --c-text*,
+     which flips with the theme along with the container's glass. */
+  --c-on-bg:#f4f8fd; --c-on-bg-2:#aebbd0; --c-on-bg-3:#93a0b8;
+  --c-overlay:radial-gradient(120% 85% at 50% -8%,rgba(122,166,255,0.18) 0%,rgba(255,129,10,0.06) 42%,transparent 74%),linear-gradient(180deg,#20242f 0%,#171b24 100%);
+  --c-overlay-soft:rgba(6,8,13,0.55);
+}
+[data-theme="light"] {
+  --c-page:#e7ebf4;
+  --c-text:#0c0f16; --c-text-2:#64708f; --c-text-3:#8a96b4;
+  --c-panel:rgba(255,255,255,0.4); --c-panel-2:rgba(255,255,255,0.72);
+  --c-panel-strong:linear-gradient(165deg,#ffffff,#f6f4ff);
+  --c-border:rgba(255,255,255,0.82); --c-chip:rgba(255,255,255,0.7); --c-input:rgba(247,249,253,0.85);
+  --c-btn-bg:linear-gradient(180deg,#2a3553,#19233e); --c-btn-fg:#ffffff;
+  --c-logo:#0c0f16;
+  --c-nav:#33405c;
+  --c-overlay:radial-gradient(120% 85% at 50% -8%,rgba(122,166,255,0.3) 0%,rgba(244,143,192,0.12) 38%,transparent 72%),#e9edf6;
+  --c-overlay-soft:rgba(231,235,244,0.6);
+}
+
+body { font-family:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif; color:var(--c-text); -webkit-font-smoothing:antialiased; background:var(--c-page); }
+/* Stacking: fallback → shader → grain → UI. Content must stay above WebGL. */
+body::before { content:''; position:fixed; inset:0; z-index:0; background:radial-gradient(60% 60% at 45% 42%,#15393c 0%,#3a2a12 55%,#06080d 100%); pointer-events:none; }
+#shaderBg-root {
+  position:fixed; inset:0; width:100vw; height:100vh;
+  z-index:1; pointer-events:none;
+  isolation:isolate;
+}
+#shaderBg-root canvas {
+  width:100%!important; height:100%!important; display:block;
+  pointer-events:none !important;
+  position:absolute !important; inset:0 !important;
+  z-index:0 !important;
+}
+body::after { content:''; position:fixed; inset:0; z-index:2; pointer-events:none; opacity:0.045; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.app-content { position:relative; z-index:3; }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:none; } }
+@keyframes pageIn { from { opacity:0; transform:translateY(16px) scale(0.992); } to { opacity:1; transform:none; } }
+@keyframes revealUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
+@keyframes flowDash { to { background-position: 0 -14px; } }
+@keyframes floatY { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-12px); } }
+@keyframes pulseDot { 0%,100% { opacity:1; } 50% { opacity:0.35; } }
+@keyframes spin { to { transform:rotate(360deg); } }
+::selection { background:#cdf03f; color:#10160a; }
+a { text-decoration:none; color:inherit; }
+button { font-family:inherit; }
+/* Native <select> dropdowns: OS options often force a white menu — keep text readable. */
+.sw-select {
+  color: var(--c-text);
+  background-color: var(--c-panel-2);
+  color-scheme: dark;
+}
+[data-theme="light"] .sw-select {
+  color-scheme: light;
+  background-color: #ffffff;
+  color: #0c0f16;
+}
+.sw-select option {
+  background-color: #151a23;
+  color: #f4f8fd;
+}
+[data-theme="light"] .sw-select option {
+  background-color: #ffffff;
+  color: #0c0f16;
+}
+::-webkit-scrollbar { height:8px; width:8px; }
+::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.22); border-radius:99px; }
+
+/* ---- Responsive ---- */
+@media (max-width: 900px) {
+  .wrap { padding-left:16px !important; padding-right:16px !important; padding-bottom:56px !important; }
+  .topnav { flex-wrap:wrap !important; gap:10px !important; border-radius:24px !important; padding:11px 14px !important; justify-content:center !important; }
+  header { margin-top:34px !important; min-height:0 !important; gap:30px !important; }
+  section { margin-top:74px !important; }
+}
+@media (max-width: 600px) {
+  .navlang { display:none !important; }
+  section { margin-top:60px !important; }
+  h1 { font-size:34px !important; line-height:1.05 !important; }
+  h2 { font-size:22px !important; line-height:1.15 !important; }
+  p  { font-size:15px !important; line-height:1.55 !important; }
+}
+
+/* ---- Utility classes for responsive layouts (opt-in via className) ---- */
+.rp-modal-inner { padding: clamp(16px, 4vw, 34px) !important; }
+.rp-modal-max { max-width: min(96vw, var(--rp-max, 720px)) !important; }
+.rp-modal-hero { max-width: min(96vw, 1000px) !important; }
+
+/* Global fallbacks: on very narrow screens, keep any inline max-width
+   container from bursting the viewport. Uses attribute selectors that
+   catch the common `maxWidth: XYZ` patterns baked into inline styles. */
+@media (max-width: 640px) {
+  /* Cap absurdly-wide sections so 375px devices don't require horizontal scroll. */
+  [style*="max-width: 1000px"], [style*="maxWidth: 1000"],
+  [style*="max-width: 940px"],  [style*="maxWidth: 940"],
+  [style*="max-width: 880px"],  [style*="maxWidth: 880"],
+  [style*="max-width: 720px"],  [style*="maxWidth: 720"],
+  [style*="max-width: 680px"],  [style*="maxWidth: 680"],
+  [style*="max-width: 640px"],  [style*="maxWidth: 640"],
+  [style*="max-width: 620px"],  [style*="maxWidth: 620"],
+  [style*="max-width: 480px"],  [style*="maxWidth: 480"],
+  [style*="max-width: 420px"],  [style*="maxWidth: 420"] {
+    max-width: 100% !important;
+  }
+  /* Trim big vertical paddings on section-like blocks. Only touches padding-top/bottom
+     via the shorthand, and only when the first component is a large px number. */
+  [style*="padding: 72px"] { padding: 40px 20px !important; }
+  [style*="padding: 60px"] { padding: 32px 18px !important; }
+  [style*="padding: 44px"] { padding: 26px 16px !important; }
+  [style*="padding: 40px"] { padding: 24px 16px !important; }
+  [style*="padding: 38px"] { padding: 22px 16px !important; }
+  [style*="padding: 36px"] { padding: 22px 16px !important; }
+  [style*="padding: 34px"] { padding: 20px 16px !important; }
+  [style*="padding: 32px"] { padding: 20px 14px !important; }
+  [style*="padding: 30px"] { padding: 18px 14px !important; }
+  [style*="padding: 28px"] { padding: 18px 14px !important; }
+  [style*="padding: 26px"] { padding: 16px 12px !important; }
+  /* Large vertical margins between sections. */
+  [style*="margin-top: 150px"] { margin-top: 60px !important; }
+  [style*="marginTop: 150"]    { margin-top: 60px !important; }
+  [style*="margin-top: 130px"] { margin-top: 56px !important; }
+  [style*="marginTop: 130"]    { margin-top: 56px !important; }
+  [style*="margin-top: 120px"] { margin-top: 50px !important; }
+  [style*="marginTop: 120"]    { margin-top: 50px !important; }
+  /* Big flex gaps between hero columns. */
+  [style*="gap: 48px"] { gap: 24px !important; }
+  [style*="gap: 40px"] { gap: 22px !important; }
+  [style*="gap: 32px"] { gap: 20px !important; }
+}
+
+/* Prevent iOS auto-zoom on focus by ensuring form fields render at ≥ 16px. */
+@media (max-width: 640px) {
+  input:not([type="checkbox"]):not([type="radio"]),
+  textarea, select {
+    font-size: 16px !important;
+  }
+}
+
+/* On small phones, force `flex-wrap` on grids that were `1fr 1fr` etc. */
+@media (max-width: 500px) {
+  [style*="grid-template-columns: 1fr 1fr"],
+  [style*="gridTemplateColumns: '1fr 1fr'"],
+  [style*="grid-template-columns: 1fr 1fr 1fr"],
+  [style*="gridTemplateColumns: '1fr 1fr 1fr'"] {
+    grid-template-columns: 1fr !important;
+  }
+}

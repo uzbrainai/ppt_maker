@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.DS_Store
+
+# Secrets / local env — never commit (keep .env.example only).
+.env
+.env.*
+!.env.example

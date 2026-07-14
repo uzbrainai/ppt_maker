@@ -1,0 +1,141 @@
+# slidewind — services:
+#   web        : front/web SPA (nginx) proxying /api/ → slidewind   :8080
+#   admin      : front/admin SPA (nginx) proxying /api/ → slidewind :8083
+#   slidewind  : deck generation API (general + premium)            :8081
+#   imagesvc   : image generation microservice (premium)            :8082
+#   db         : PostgreSQL (users, credits, materials)             :5432
+#
+#   docker compose --env-file .env up -d --build   # start all
+#   open http://localhost:8080                    # web UI
+#   curl localhost:8081/health                    # API direct
+#
+# Requires OPENAI_API_KEY in the environment (or an .env file beside this one).
+# Auth (login/register/Google) needs JWT_SECRET + the db service (DATABASE_URL
+# below points at `db`, not localhost).
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-sw}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: ${POSTGRES_DB:-slidewind}
+    volumes:
+      - slidewind_pg:/var/lib/postgresql/data
+    ports:
+      - "${POSTGRES_PORT:-5433}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-sw} -d ${POSTGRES_DB:-slidewind}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  slidewind:
+    image: slidewind:slim
+    build:
+      context: .
+      target: runtime-slim
+    entrypoint: ["node", "dist/services/server.js"]
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4o}
+      - OPENAI_IMAGE_MODEL=${OPENAI_IMAGE_MODEL:-gpt-image-2}
+      - IMAGE_SERVICE_URL=http://imagesvc:8082
+      - IMAGE_SVC_TOKEN=${IMAGE_SVC_TOKEN:-}
+      - SLIDEWIND_TOKEN=${SLIDEWIND_TOKEN:-}
+      - SLIDEWIND_PORT=8081
+      - CORS_ORIGIN=${CORS_ORIGIN:-}
+      - AUTH_REQUIRED=${AUTH_REQUIRED:-false}
+      - JWT_SECRET=${JWT_SECRET:-}
+      - JWT_TTL=${JWT_TTL:-7d}
+      # Always use the compose Postgres service (localhost in .env is for host-side npm run serve).
+      - DATABASE_URL=postgres://${POSTGRES_USER:-sw}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-slidewind}
+      - ADMIN_EMAIL=${ADMIN_EMAIL:-}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-}
+      - SMTP_HOST=${SMTP_HOST:-}
+      - SMTP_PORT=${SMTP_PORT:-465}
+      - SMTP_USER=${SMTP_USER:-}
+      - SMTP_PASS=${SMTP_PASS:-}
+      - SMTP_FROM=${SMTP_FROM:-}
+      - EMAIL_CODE_TTL_MINUTES=${EMAIL_CODE_TTL_MINUTES:-15}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-}
+      - TAVILY_API_KEY=${TAVILY_API_KEY:-}
+      - TAVILY_TIMEOUT_MS=${TAVILY_TIMEOUT_MS:-15000}
+      - TAVILY_SEARCH_DEPTH=${TAVILY_SEARCH_DEPTH:-basic}
+      - TAVILY_MAX_RESULTS=${TAVILY_MAX_RESULTS:-5}
+      - RESEARCH_PRIMARY_TIMEOUT_MS=${RESEARCH_PRIMARY_TIMEOUT_MS:-12000}
+      - BRAVE_API_KEY=${BRAVE_API_KEY:-}
+      - CLICK_MERCHANT_ID=${CLICK_MERCHANT_ID:-}
+      - CLICK_SERVICE_ID=${CLICK_SERVICE_ID:-}
+      - CLICK_SECRET_KEY=${CLICK_SECRET_KEY:-}
+      - CLICK_MERCHANT_USER_ID=${CLICK_MERCHANT_USER_ID:-}
+      - CLICK_PRICE_PRO_UZS=${CLICK_PRICE_PRO_UZS:-229000}
+      - CLICK_PRICE_TEAM_UZS=${CLICK_PRICE_TEAM_UZS:-590000}
+      - PUBLIC_WEB_URL=${PUBLIC_WEB_URL:-https://make-ppt.com}
+      - PUBLIC_API_URL=${PUBLIC_API_URL:-https://make-ppt.com/api}
+      - OUT_DIR=/out
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./examples/out/api:/out
+    depends_on:
+      db:
+        condition: service_healthy
+      imagesvc:
+        condition: service_started
+    restart: unless-stopped
+
+  web:
+    image: slidewind:web
+    build:
+      context: .
+      target: web
+      args:
+        VITE_SLIDEWIND_BASE: ${VITE_SLIDEWIND_BASE:-/api}
+        VITE_API_BASE: ${VITE_API_BASE:-}
+        VITE_BASE: ${VITE_BASE:-/}
+        VITE_GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+    ports:
+      - "${WEB_PORT:-8080}:80"
+    depends_on:
+      - slidewind
+    restart: unless-stopped
+
+  # Admin panel — separate SPA on its own port. Talks to the same slidewind
+  # backend via /api (nginx proxy). Every route is gated by role=admin JWT.
+  admin:
+    image: slidewind:admin
+    build:
+      context: .
+      target: admin
+      args:
+        VITE_API_BASE: ${VITE_ADMIN_API_BASE:-/api}
+        VITE_BASE: ${VITE_ADMIN_BASE:-/}
+    ports:
+      - "${ADMIN_PORT:-8083}:80"
+    depends_on:
+      - slidewind
+    restart: unless-stopped
+
+  imagesvc:
+    image: slidewind:slim
+    build:
+      context: .
+      target: runtime-slim
+    entrypoint: ["node", "dist/services/imagesvc.js"]
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_IMAGE_MODEL=${OPENAI_IMAGE_MODEL:-gpt-image-2}
+      - IMAGE_CACHE_DIR=/cache
+      - IMAGE_SVC_PORT=8082
+      - IMAGE_SVC_CONCURRENCY=${IMAGE_SVC_CONCURRENCY:-3}
+      - IMAGE_SVC_TOKEN=${IMAGE_SVC_TOKEN:-}
+    ports:
+      - "8082:8082"
+    volumes:
+      - ./.imgcache:/cache
+    restart: unless-stopped
+
+volumes:
+  slidewind_pg:

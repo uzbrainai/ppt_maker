@@ -1,0 +1,11 @@
+node_modules
+dist
+.imgcache
+examples/out
+examples/out/*.pptx
+examples/out/*.pdf
+examples/out/*.svg
+.git
+.DS_Store
+*.log
+/tmp
